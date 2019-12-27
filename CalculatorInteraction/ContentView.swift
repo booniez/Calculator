@@ -10,13 +10,13 @@ import SwiftUI
 
 struct ContentView: View {
     let scale: CGFloat = UIScreen.main.bounds.width / 414
-    @State private var brain: CalculatorBrain = .left("0")
+    @ObservedObject var model = CalculatorModel()
     
     var body: some View {
-        VStack(spacing: 12.0) {
+        VStack(spacing: 12) {
             Spacer()
-            CalculatorResult(title: brain.output)
-            CalculatorButtonPad(brain: $brain)
+            CalculatorResult(title: model.brain.output)
+            CalculatorButtonPad(brain: $model.brain)
         }
         .scaleEffect(scale)
     }
