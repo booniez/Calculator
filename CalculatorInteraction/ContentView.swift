@@ -11,12 +11,19 @@ import SwiftUI
 struct ContentView: View {
     let scale: CGFloat = UIScreen.main.bounds.width / 414
     @ObservedObject var model = CalculatorModel()
+    @State private var editingHistory = false
     
     var body: some View {
         VStack(spacing: 12) {
             Spacer()
+            Button("操作记录\(model.history.count)") {
+                print(self.model.history)
+                self.editingHistory = true
+            }.sheet(isPresented: $editingHistory) {
+                HistoryView(model: self.model)
+            }
             CalculatorResult(title: model.brain.output)
-            CalculatorButtonPad(brain: $model.brain)
+            CalculatorButtonPad(model: model)
         }
         .scaleEffect(scale)
     }

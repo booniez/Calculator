@@ -24,7 +24,8 @@ struct CalculatorResult: View {
 }
 
 struct CalculatorButtonPad: View {
-    @Binding var brain: CalculatorBrain
+//    @Binding var brain: CalculatorBrain
+    var model: CalculatorModel
     let pad: [[CalculatorButtonItem]] = [[.command(.clear), .command(.flip), .command(.percent), .op(.multiply)],
                                         [.digit(7), .digit(8), .digit(9), .op(.divide)],
                                         [.digit(4), .digit(5), .digit(6), .op(.minus)],
@@ -33,20 +34,22 @@ struct CalculatorButtonPad: View {
     var body: some View {
         VStack(spacing: 10) {
             ForEach(pad, id: \.self) { item in
-                CalculatorButtonRow(brain: self.$brain, row: item)
+                CalculatorButtonRow(model: self.model, row: item)
             }
         }
     }
 }
 
 struct CalculatorButtonRow: View {
-    @Binding var brain: CalculatorBrain
+//    @Binding var brain: CalculatorBrain
+    var model: CalculatorModel
     let row: [CalculatorButtonItem]
     var body: some View {
         HStack {
             ForEach(row, id: \.self) { item in
                 CalculatorButton(title: item.title, foregroundColorName: item.foregroundColorName, size: item.size, backgroundName: item.backgroundColorName) {
-                    self.brain = self.brain.apply(item: item)
+//                    self.brain = self.brain.apply(item: item)
+                    self.model.apply(item)
                 }
             }
         }
